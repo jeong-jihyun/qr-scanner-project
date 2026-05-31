@@ -1,0 +1,74 @@
+# ===== GitHub =====
+/.github
+
+# ===== Android =====
+# 로컬 SDK 경로 등 개발 환경 의존 파일 (절대 커밋 금지)
+android-app/local.properties
+
+# Gradle 빌드 캐시 및 결과물
+android-app/.gradle/
+android-app/build/
+android-app/app/build/
+
+# Android Studio / IntelliJ / WebStorm 프로젝트 파일
+.idea/
+**/*.iml
+android-app/.idea/
+android-app/captures/
+android-app/.externalNativeBuild/
+android-app/.cxx/
+
+# 서명 키스토어 (절대 커밋 금지)
+*.jks
+*.keystore
+
+# 인증키 / 인증서 파일 (절대 커밋 금지)
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+*.pub
+
+# mkcert 실행 파일
+mkcert.exe
+mkcert
+
+# APK / AAB 빌드 산출물
+*.apk
+*.aab
+
+# ===== React App =====
+# 의존성 디렉토리
+react-app/node_modules/
+
+# 빌드 산출물
+react-app/build/
+
+# 환경 변수 파일 (비밀 키 포함 가능, 절대 커밋 금지)
+react-app/.env
+react-app/.env.local
+react-app/.env.development.local
+react-app/.env.test.local
+react-app/.env.production.local
+
+# 테스트 커버리지
+react-app/coverage/
+
+# npm / yarn 로그
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== OS 생성 파일 =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===== 에디터 =====
+.vscode/
+*.suo
+*.user
+*.swp
+*.swo
