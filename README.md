@@ -96,7 +96,8 @@ mkcert 192.168.45.223
 192.168.45.223-key.pem
 ```
 
-### Step 5. .env 파일 수정
+### Step 5. .env 파일 만들기
+`react-app/.env`는 `.gitignore`에 들어 있어 저장소에 없습니다. 아래 내용으로 새로 만드세요.
 ```
 PORT=3001
 HTTPS=true
@@ -205,3 +206,31 @@ if (window.Android) {
 | 카메라 | HTTPS 필수 |
 | mkcert IP | PC IP 바뀌면 인증서 재생성 필요 |
 | ngrok | 실행할 때마다 URL 변경됨 (유료시 고정) |
+
+---
+
+## 점검 내역 (2026-10)
+
+| 구분 | 내용 |
+| --- | --- |
+| 빌드 확인 | `react-app`에서 `npm install` 후 `NODE_OPTIONS=--openssl-legacy-provider npm run build`가 성공 (Node 22 기준. react-scripts 3.4.4는 새 Node에서 이 옵션이 필요, Node 12에서는 불필요) |
+| 코드 연결 확인 | 웹의 `window.Android.onScanResult(...)` 호출과 Android `AndroidBridge.onScanResult`(`@JavascriptInterface` 붙음)가 서로 맞음. `minSdkVersion 16`도 위 표와 일치 |
+| README 보완 | 저장소에 없는 `react-app/.env`를 "수정"하라고 되어 있던 단계를 "새로 만들기"로 고침 |
+
+### 저장소에 없는 파일 (직접 준비)
+
+| 파일 | 이유 |
+| --- | --- |
+| `react-app/.env` | `.gitignore`로 제외 (위 Step 5 내용으로 생성) |
+| `android-app/local.properties` | 내 PC의 SDK 경로라 제외 (Android Studio가 자동 생성) |
+| `android-app/gradle/wrapper/gradle-wrapper.jar` | 저장소에 없음. Android Studio로 열면 Gradle이 알아서 받아 오지만, 터미널의 `./gradlew`는 이 파일이 없으면 동작하지 않을 수 있음 |
+| `*.pem` (mkcert 인증서) | `.gitignore`로 제외 (직접 생성) |
+
+### 확인하지 못한 것
+
+Android SDK가 없어 **Android 앱 빌드와 실제 기기에서의 스캔은 확인하지 못했습니다.**
+
+### 보안 참고
+
+- `MainActivity`의 `onReceivedSslError`는 모든 인증서 오류를 무시하고 진행(`handler.proceed()`)합니다. mkcert/ngrok으로 개발하기 위한 설정이지만 **배포 앱에서는 제거**해야 합니다.
+- `network_security_config.xml`은 개발 중 HTTP(평문) 통신을 허용합니다.
